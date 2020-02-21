@@ -1,3 +1,3 @@
-import Paginator from "./components/Paginator";
+import IPFPaginator from "./IPFPaginator";
 
-export { Paginator };
+export default IPFPaginator;
