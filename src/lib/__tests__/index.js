@@ -57,7 +57,7 @@ describe("Custom renderering", () => {
     render(<IPFPaginator data={data} renderItem={mockRenderItem} />);
     
     expect(mockRenderItem.mock.calls.length).toBe(2);
-  })
+  });
   
   it("custom UI is being rendered", () => {
     const data = ["Apple", "Mangoes"];
@@ -68,5 +68,40 @@ describe("Custom renderering", () => {
     render(<IPFPaginator data={data} renderItem={mockRenderItem} />);
     
     expect(screen.getByText('Fruit at 0 is Apple')).toBeInTheDocument();
-  })
+  });
+});
+
+describe('Table rendering', () => {
+  it("Doesn't render table if no data provided", () => {
+    render(<IPFPaginator asTable />);
+    
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  });
+
+  it("Throws if data provided contains non-objects", () => {
+    const data = [{name: "Walter"}, "Mangoes"];
+    
+    expect(() => render(<IPFPaginator asTable={true} data={data} />)).toThrow();
+  });
+  
+  it("Renders table if valid data is provided", () => {
+    const data = [{name: "Walter"}, {name: "James"}];
+    
+    render(<IPFPaginator asTable data={data} />);
+    
+    expect(screen.queryByRole('table')).toBeInTheDocument();
+  });
+  
+  it("Renders table headings if valid data provided", () => {
+    const data = [{name: "Walter", age: "26"}, {name: "James", age: "12"}];
+    
+    render(<IPFPaginator asTable data={data} />);
+    
+    expect(screen.queryByText('name')).toBeInTheDocument();
+    expect(screen.queryByText('age')).toBeInTheDocument();
+  });
+  
+  it("Renders custom table row if renderItem is passed", () => {
+    
+  });
 });
