@@ -49,7 +49,7 @@ describe("Default rendering ", () => {
   })
 });
 
-describe("Custom renderering", () => {
+describe("Custom item renderering", () => {
   it("renderItem prop is called", () => {
     const data = ["Apple", "Mangoes"];
     const mockRenderItem = jest.fn();
@@ -101,7 +101,44 @@ describe('Table rendering', () => {
     expect(screen.queryByText('age')).toBeInTheDocument();
   });
   
-  it("Renders custom table row if renderItem is passed", () => {
-    
+});
+
+describe("Custom table row renderering", () => {
+  it("renderCustomRow prop is called", () => {
+    const data = [{name: "Walter"}, {name: "James"}];
+    const mockRenderCustomRow = jest.fn();
+    render(<IPFPaginator asTable data={data} renderCustomRow = {mockRenderCustomRow} />);
+     
+    expect(mockRenderCustomRow.mock.calls.length).toBe(2);
   });
+  
+  it("custom table row UI is being rendered", () => {
+    const renderCustomRow = (rowData, index) => (
+      <tr key={index}>
+        {
+          Object.entries(rowData).map(([key, value]) => {
+            if(key == 'skills')
+              return (
+                <td key={`td${key}`}>
+                  <ul> { value.map((skill, index) => 
+                      <li key={index}>{skill}</li>
+                    )}
+                  </ul>
+                </td>
+              );
+
+            return <td key={`td${key}`}>{value}</td>
+          })
+        }
+      </tr>
+    );
+    const data = [{name: "Walter", skills: ["Eating", "Arguing"]}, {name: "James", skills: ["Fishing"]}];
+    const {getAllByRole} = render(<IPFPaginator asTable data={data} renderCustomRow = {renderCustomRow} />);
+    
+    expect(getAllByRole('listitem')[0]).toHaveTextContent("Eating");
+  });
+
+  // it("Renders custom table row if renderRow is passed", () => {
+    
+  // });
 });
