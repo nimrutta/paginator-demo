@@ -5,7 +5,7 @@ function validateData(data) {
     return !data.some(item => typeof item !== "object");
 }
 
-function IPFPaginator({data, dataType = 'data', asTable, renderItem, className, ...paginatorProps}){
+function IPFPaginator({data, dataType = 'data', asTable, renderItem, renderCustomRow, className, ...paginatorProps}){
     function renderDataItem(item, index){
         if(typeof renderItem === 'function')
             return renderItem(item, index);
@@ -23,8 +23,8 @@ function IPFPaginator({data, dataType = 'data', asTable, renderItem, className, 
     }
 
     function renderTableRow(rowData, index){
-        if(typeof renderItem === 'function')
-            return renderItem(rowData, index);
+        if(typeof renderCustomRow === 'function')
+            return renderCustomRow(rowData, index);
         else
             return (
                 <tr key={index}>
