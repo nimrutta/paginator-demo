@@ -29,16 +29,10 @@ Install dependencies:
 $ npm install
 ```
 
-Prepare the demo:
-
-```console
-$ make demo
-```
-
 Run the server:
 
 ```console
-$ make serve
+$ npm run start
 ```
 
 Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
