@@ -26,7 +26,7 @@ $ cd react-paginate
 Install dependencies:
 
 ```console
-$ make install
+$ npm install
 ```
 
 Prepare the demo:
